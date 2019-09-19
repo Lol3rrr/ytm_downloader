@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-  port := "8080"
+  port := "80"
 
   fmt.Printf("Starting on Port %s ... \n", port)
 
