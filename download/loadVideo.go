@@ -1,4 +1,4 @@
-package loader
+package download
 
 import (
   "github.com/Lol3rrr/ytdl"

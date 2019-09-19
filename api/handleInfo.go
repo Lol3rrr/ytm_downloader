@@ -1,14 +1,15 @@
-package main
+package api
 
 import (
   "strings"
   "strconv"
   "net/http"
+  "encoding/json"
 
-  "ytm_downloader/loader"
+  "ytm_downloader/info"
 )
 
-func handleDownload(w http.ResponseWriter, r *http.Request) {
+func HandleInfo(w http.ResponseWriter, r *http.Request) {
   url := r.URL.Path
   urlParts := strings.Split(url, "/")
   id := urlParts[len(urlParts) - 1]
@@ -19,11 +20,18 @@ func handleDownload(w http.ResponseWriter, r *http.Request) {
     return
   }
 
-  content, err := loader.LoadVideo(id)
+  data, err := info.GetInfo(id)
   if err != nil {
     w.WriteHeader(400)
 
-    return
+    return;
+  }
+
+  content, err := json.Marshal(data)
+  if err != nil {
+    w.WriteHeader(400)
+
+    return;
   }
 
   w.Header().Set("Content-Length", strconv.Itoa(len(content)))
