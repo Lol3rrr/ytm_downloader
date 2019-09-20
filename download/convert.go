@@ -22,7 +22,7 @@ func convertWebmToMP3(id string, data []byte) (error) {
       rawFileName,
       "-vn",
       "-ab",
-      "128k",
+      "96k",
       "-ar",
       "44100",
       "-y",

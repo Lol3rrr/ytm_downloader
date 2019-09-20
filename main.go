@@ -5,13 +5,10 @@ import (
   "net/http"
 
   "ytm_downloader/api"
-  "ytm_downloader/search"
 )
 
 func main() {
   port := "8080"
-
-  search.SearchVideos("Missio dizzy")
 
   fmt.Printf("Starting on Port %s ... \n", port)
 
