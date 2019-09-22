@@ -2,12 +2,6 @@ package search
 
 import (
   "flag"
-  "net/http"
-
-  "google.golang.org/api/googleapi/transport"
-  "google.golang.org/api/youtube/v3"
-
-  "ytm_downloader/config"
 )
 
 var (
@@ -17,16 +11,7 @@ var (
 func SearchVideos(searchTerm string) (SearchResult, error) {
   flag.Parse()
 
-  config, err := config.LoadConfig()
-  if err != nil {
-    return SearchResult{}, err
-  }
-
-  client := &http.Client{
-    Transport: &transport.APIKey{Key: config.YouTubeApiToken},
-  }
-
-  service, err := youtube.New(client)
+  service, err := getYTService()
   if err != nil {
     return SearchResult{}, err
   }

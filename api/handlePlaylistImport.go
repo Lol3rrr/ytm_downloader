@@ -1,26 +1,22 @@
 package api
 
 import (
-  "strings"
   "strconv"
   "net/http"
   "encoding/json"
 
-  "ytm_downloader/info"
+  "ytm_downloader/search"
 )
 
-func HandleInfo(w http.ResponseWriter, r *http.Request) {
-  url := r.URL.Path
-  urlParts := strings.Split(url, "/")
-  id := urlParts[len(urlParts) - 1]
-
-  if id == "" || id == "get" || len(id) != 11 {
+func HandlePlaylistImport(w http.ResponseWriter, r *http.Request) {
+  keys, ok := r.URL.Query()["playlistID"]
+  if !ok || len(keys[0]) < 1 {
     w.WriteHeader(400)
 
     return
   }
 
-  data, err := info.GetVideoInfo(id)
+  data, err := search.GetPlaylist(keys[0])
   if err != nil {
     w.WriteHeader(400)
 

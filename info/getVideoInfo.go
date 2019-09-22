@@ -4,7 +4,7 @@ import (
   "github.com/rylio/ytdl"
 )
 
-func GetInfo(id string) (SongInfo, error) {
+func GetVideoInfo(id string) (SongInfo, error) {
   watchUrl := "https://www.youtube.com/watch?v=" + id
 
   vid, err := ytdl.GetVideoInfo(watchUrl)
@@ -15,6 +15,7 @@ func GetInfo(id string) (SongInfo, error) {
   result := SongInfo {
     ID: id,
     Title: vid.Title,
+    Channel: vid.Author,
   }
 
   return result, nil

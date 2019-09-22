@@ -15,6 +15,7 @@ func main() {
   http.HandleFunc("/song/get/", api.HandleDownload)
   http.HandleFunc("/song/info/", api.HandleInfo)
   http.HandleFunc("/search/videos", api.HandleSearchVideos)
+  http.HandleFunc("/import/playlist", api.HandlePlaylistImport)
   if err := http.ListenAndServe(":" + port, nil); err != nil {
     panic(err)
   }
