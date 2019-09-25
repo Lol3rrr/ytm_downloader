@@ -5,7 +5,7 @@ import (
 )
 
 // Retrieve playlistItems in the specified playlist
-func playlistItemsList(service *youtube.Service, part string, playlistId string, pageToken string) *youtube.PlaylistItemListResponse {
+func playlistItemsList(service *youtube.Service, part string, playlistId string, pageToken string) (*youtube.PlaylistItemListResponse, error) {
   call := service.PlaylistItems.List(part)
   call = call.PlaylistId(playlistId)
   call = call.MaxResults(50)
@@ -14,9 +14,9 @@ func playlistItemsList(service *youtube.Service, part string, playlistId string,
   }
   response, err := call.Do()
   if err != nil {
-    return nil
+    return nil, err
   }
-  return response
+  return response, nil
 }
 
 func GetPlaylist(playlistId string) (SearchResult, error) {
@@ -32,7 +32,10 @@ func GetPlaylist(playlistId string) (SearchResult, error) {
   nextPageToken := ""
   for {
     // Retrieve next set of items in the playlist.
-    playlistResponse := playlistItemsList(service, "snippet", playlistId, nextPageToken)
+    playlistResponse, err := playlistItemsList(service, "snippet", playlistId, nextPageToken)
+    if err != nil {
+      return result, nil
+    }
 
     for _, playlistItem := range playlistResponse.Items {
       vidID := playlistItem.Snippet.ResourceId.VideoId
