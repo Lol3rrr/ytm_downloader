@@ -1,9 +1,9 @@
-FROM lol3r/golang-ffmpeg:latest
+FROM golang:latest
 
 WORKDIR /go/src/ytm_downloader
 COPY . .
 
-RUN go get -d -v ./...
+RUN go get -d -v -u ./...
 RUN go install -v ./...
 
 EXPOSE 8080
